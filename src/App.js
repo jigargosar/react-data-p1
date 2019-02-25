@@ -24,13 +24,15 @@ const store = observable.object({
 })
 
 initStore()
+store.inspectorBounds.x = 0
+store.inspectorBounds.y = 0
 
 const pickXY = R.pick(['x', 'y'])
 const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
   return (
-    <div className={{ dn: store.inspector.selecting }}>
+    <div className={clsx({ dn: store.inspector.selecting })}>
       <Rnd
         className={clsx('f7')}
         size={store.inspectorBounds}
