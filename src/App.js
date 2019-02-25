@@ -83,7 +83,13 @@ const InspectObject = observer(({ data }) => {
         const isComplexType = R.is(Object)(value)
         return (
           <div key={key} className="flex items-center">
-            <div style={{ fontSize: 6, position: 'relative', top: '2px' }}>
+            <div
+              style={{
+                fontSize: '0.6em',
+                position: 'relative',
+                top: '2px',
+              }}
+            >
               {isComplexType ? '► ' : ' '}
             </div>
             <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
