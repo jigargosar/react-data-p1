@@ -41,12 +41,18 @@ const Inspector = observer(() => {
         width: '100vw',
       }}
     >
-      <div className="pa1 flex flex-column" style={{ fontSize: 10 }}>
-        <pre>
+      <div className="pa1 flex flex-row" style={{ fontSize: 10 }}>
+        <pre className="flex-grow-1">
           {R.compose(
             JSON.stringify(_, null, 2),
             toJS,
             R.prop('inspected'),
+          )(store)}
+        </pre>
+        <pre className="flex-grow-1">
+          {R.compose(
+            JSON.stringify(_, null, 2),
+            toJS,
           )(store)}
         </pre>
       </div>
