@@ -7,6 +7,7 @@ import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
 import { InspectorPanel } from './InspectorPanel'
+import { TreeLike } from './TreeLike'
 
 // import clsx from 'clsx'
 
@@ -47,6 +48,16 @@ function App() {
   return (
     <div className="vh-100">
       <h1 className="ma0">ReactDataP1</h1>
+      <TreeLike
+        getNodesAt={level => {
+          if (level === 0) {
+            return store.rows
+          }
+        }}
+        renderNode={row => {
+          return <Row key={row.id} row={row} />
+        }}
+      />
       {store.rows.map(renderRow)}
       {false && <InspectorPanel store={store} />}
     </div>
