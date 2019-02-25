@@ -40,9 +40,13 @@ const Inspector = observer(() => {
       <Rnd
         className={clsx('f7')}
         size={pickSize(store.inspectorBounds)}
-        position={pickXY(store.inspectorBounds)}
+        position={{
+          x: store.inspectorBounds.x,
+          y: store.inspectorBounds.y,
+        }}
         onDragStop={(e, d) => {
-          Object.assign(store.inspectorBounds, pickXY(d))
+          store.inspectorBounds.x = d.x
+          store.inspectorBounds.y = d.y
         }}
         onResize={(e, direction, ref, delta, position) => {
           Object.assign(
