@@ -27,6 +27,7 @@ const pickSize = R.pick(['width', 'height'])
 const Inspector = observer(() => {
   return (
     <Rnd
+      className="f7"
       size={store.inspectorBounds}
       position={store.inspectorBounds}
       onDragStop={(e, d) => {
@@ -35,8 +36,16 @@ const Inspector = observer(() => {
       onResize={(e, direction, ref, delta, position) => {
         Object.assign(store.inspectorBounds, pickSize(ref.style), position)
       }}
+      dragHandleClassName={'drag-handle'}
     >
-      <div className="bg-black white">Toolbar</div>
+      <div
+        className="drag-handle bg-black white flex"
+        style={{ cursor: 'move' }}
+      >
+        <div className="pa1 link" tabIndex={-1}>
+          O
+        </div>
+      </div>
       <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
         <pre>
           {R.compose(
