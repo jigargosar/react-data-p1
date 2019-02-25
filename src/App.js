@@ -32,17 +32,16 @@ initStore()
 
 const Inspector = observer(() => {
   return (
-    <div
-      className="overflow-scroll pa3 flex flex-column bg-black-80 white"
-      style={{ height: store.inspectorBounds.height }}
-    >
-      <pre>
-        {R.compose(
-          JSON.stringify(_, null, 2),
-          toJS,
-          // it.iObj,
-        )(store)}
-      </pre>
+    <div className="overflow-scroll" style={{ height: 100 }}>
+      <div className=" pa3 flex flex-column bg-black-80 white">
+        <pre>
+          {R.compose(
+            JSON.stringify(_, null, 2),
+            toJS,
+            // it.iObj,
+          )(store)}
+        </pre>
+      </div>
     </div>
   )
 })
@@ -79,7 +78,7 @@ function App() {
     >
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
-      {/*<Inspector />*/}
+      <Inspector />
     </div>
   )
 }
