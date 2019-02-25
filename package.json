@@ -5,6 +5,7 @@
   "dependencies": {
     "aproba": "latest",
     "chance": "^1.0.18",
+    "clsx": "^1.0.3",
     "faker": "^4.1.0",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.0.1",

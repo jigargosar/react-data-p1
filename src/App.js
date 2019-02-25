@@ -8,6 +8,7 @@ import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
 import { _ } from 'param.macro'
 import { Rnd } from 'react-rnd'
+import clsx from 'clsx'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -17,6 +18,9 @@ const store = observable.object({
   rows: R.times(createFakeRow)(10),
   inspected: null,
   inspectorBounds: { x: 0, y: 0, width: '100vw', height: 150 },
+  inspector: {
+    selecting: false,
+  },
 })
 
 initStore()
@@ -26,36 +30,48 @@ const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
   return (
-    <Rnd
-      className="f7"
-      size={store.inspectorBounds}
-      position={store.inspectorBounds}
-      onDragStop={(e, d) => {
-        Object.assign(store.inspectorBounds, pickXY(d))
-      }}
-      onResize={(e, direction, ref, delta, position) => {
-        Object.assign(store.inspectorBounds, pickSize(ref.style), position)
-      }}
-      dragHandleClassName={'drag-handle'}
-    >
-      <div
-        className="drag-handle bg-black white flex"
-        style={{ cursor: 'move' }}
+    <div className={{ dn: store.inspector.selecting }}>
+      <Rnd
+        className={clsx('f7')}
+        size={store.inspectorBounds}
+        position={store.inspectorBounds}
+        onDragStop={(e, d) => {
+          Object.assign(store.inspectorBounds, pickXY(d))
+        }}
+        onResize={(e, direction, ref, delta, position) => {
+          Object.assign(
+            store.inspectorBounds,
+            pickSize(ref.style),
+            position,
+          )
+        }}
+        dragHandleClassName={'drag-handle'}
       >
-        <div className="pa1 link pointer" tabIndex={-1}>
-          O
+        <div
+          className="drag-handle bg-black white flex"
+          style={{ cursor: 'move' }}
+        >
+          <div
+            className="pa1 link pointer"
+            tabIndex={-1}
+            onClick={() => {
+              store.inspector.selecting = true
+            }}
+          >
+            O
+          </div>
         </div>
-      </div>
-      <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
-        <pre>
-          {R.compose(
-            JSON.stringify(_, null, 2),
-            toJS,
-            // it.iObj,
-          )(store)}
-        </pre>
-      </div>
-    </Rnd>
+        <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
+          <pre>
+            {R.compose(
+              JSON.stringify(_, null, 2),
+              toJS,
+              // it.iObj,
+            )(store)}
+          </pre>
+        </div>
+      </Rnd>
+    </div>
   )
 })
 
