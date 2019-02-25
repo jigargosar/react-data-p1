@@ -7,8 +7,8 @@ import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
 import { _ } from 'param.macro'
-import { Rnd } from 'react-rnd'
-import clsx from 'clsx'
+
+// import clsx from 'clsx'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -27,40 +27,23 @@ initStore()
 // store.inspectorBounds.x = 0
 // store.inspectorBounds.y = 0
 
-const pickXY = R.pick(['x', 'y'])
-const pickSize = R.pick(['width', 'height'])
+// const pickXY = R.pick(['x', 'y'])
+// const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
   return (
-    <Rnd
-      className={clsx('f7')}
-      size={pickSize(store.inspectorBounds)}
-      position={{
-        x: store.inspectorBounds.x,
-        y: store.inspectorBounds.y,
-      }}
-      onDragStop={(e, d) => {
-        store.inspectorBounds.x = d.x
-        store.inspectorBounds.y = d.y
-      }}
-      onResize={(e, direction, ref, delta, position) => {
-        Object.assign(store.inspectorBounds, pickSize(ref.style), position)
-      }}
-      // dragHandleClassName={'drag-handle'}
+    <div
+      className="overflow-scroll pa3 flex flex-column bg-black-80 white"
+      style={{ height: store.inspectorBounds.height }}
     >
-      <div
-        className="overflow-scroll pa3 flex flex-column bg-black-80 white"
-        style={{ height: store.inspectorBounds.height }}
-      >
-        <pre>
-          {R.compose(
-            JSON.stringify(_, null, 2),
-            toJS,
-            // it.iObj,
-          )(store)}
-        </pre>
-      </div>
-    </Rnd>
+      <pre>
+        {R.compose(
+          JSON.stringify(_, null, 2),
+          toJS,
+          // it.iObj,
+        )(store)}
+      </pre>
+    </div>
   )
 })
 
@@ -87,12 +70,12 @@ function renderRow(row) {
 function App() {
   return (
     <div
-      className="relative min-vh-100"
-      onClick={e => {
-        if (store.inspector.selecting) {
-          store.inspector.selecting = false
-        }
-      }}
+    // className="min-vh-100"
+    // onClick={e => {
+    //   if (store.inspector.selecting) {
+    //     store.inspector.selecting = false
+    //   }
+    // }}
     >
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
