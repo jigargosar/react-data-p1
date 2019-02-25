@@ -1,10 +1,11 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { observable } from 'mobx'
+import { autorun, observable, toJS } from 'mobx'
 import * as R from 'ramda'
 import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
+import { setCache } from './cache-helpers'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -14,16 +15,11 @@ const store = observable.object({
   rows: R.times(createFakeRow)(10),
 })
 
-function hotDispose(disposer) {
-  validate('F', arguments)
-  if (module.hot) {
-    module.hot.dispose(R.tryCatch(disposer, console.error))
-  }
-}
-
-hotDispose(() => {
-  console.log('Disposing')
-})
+hotDispose(
+  autorun(() => {
+    setCache('store', toJS(store))
+  }),
+)
 
 const Row = observer(({ row }) => {
   return <div className="ma3">{row.name}</div>
@@ -45,3 +41,10 @@ function App() {
 }
 
 export default observer(App)
+
+function hotDispose(disposer) {
+  validate('F', arguments)
+  if (module.hot) {
+    module.hot.dispose(R.tryCatch(disposer, console.error))
+  }
+}
