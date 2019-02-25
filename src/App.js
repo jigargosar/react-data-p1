@@ -6,7 +6,7 @@ import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
-import { Inspect } from './Inspect'
+import { InspectorPanel } from './InspectorPanel'
 
 // import clsx from 'clsx'
 
@@ -20,31 +20,6 @@ const store = observable.object({
 })
 
 initStore()
-
-const InspectorPanel = observer(() => {
-  return (
-    <div
-      className="bg-black-80 white"
-      style={{
-        height: '25vh',
-        position: 'fixed',
-        bottom: 0,
-        width: '100vw',
-      }}
-    >
-      <div className="h-100 flex flex-row" style={{ fontSize: 12 }}>
-        <div className="overflow-scroll  w-50">
-          <Inspect data={store.inspected} />
-        </div>
-        <div className="overflow-scroll  w-50">
-          <Inspect data={store} />
-        </div>
-      </div>
-    </div>
-  )
-})
-
-InspectorPanel.displayName = 'InspectorPanel'
 
 function inspectObject(row) {
   return (store.inspected = row)
@@ -73,7 +48,7 @@ function App() {
     <div className="vh-100">
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
-      <InspectorPanel />
+      <InspectorPanel store={store} />
     </div>
   )
 }
