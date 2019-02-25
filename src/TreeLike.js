@@ -17,14 +17,7 @@ export const TreeLike = observer(function TreeLike({
     })
   }
 
-  return (
-    <div className="bg-lightest-blue">
-      <div className="f4 pa3">TreeLike:</div>
-      <div className="">
-        {renderNodesAt({ level: 0, parentNode: null })}
-      </div>
-    </div>
-  )
+  return renderNodesAt({ level: 0, parentNode: null })
 })
 
 TreeLike.displayName = 'TreeLike'

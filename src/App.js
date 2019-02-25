@@ -53,21 +53,24 @@ function App() {
   return (
     <div className="vh-100 overflow-container">
       <h1 className="ma0">ReactDataP1</h1>
-      <TreeLike
-        getNodesAt={({ level, parentNode }) => {
-          if (!parentNode) {
-            return store.rows
-          } else if (level === 1) {
-            return store.rows
-          } else {
-            return []
-          }
-        }}
-        getNodeKey={({ node, parentNode }) => node.id}
-        renderNode={({ node: row, level }) => {
-          return <Row row={row} level={level} />
-        }}
-      />
+      <div className="bg-lightest-blue">
+        <div className="f4 pa3">TreeLike:</div>
+        <TreeLike
+          getNodesAt={({ level, parentNode }) => {
+            if (!parentNode) {
+              return store.rows
+            } else if (level === 1) {
+              return store.rows
+            } else {
+              return []
+            }
+          }}
+          getNodeKey={({ node, parentNode }) => node.id}
+          renderNode={({ node: row, level }) => {
+            return <Row row={row} level={level} />
+          }}
+        />
+      </div>
       {store.rows.map(renderRow)}
       {false && <InspectorPanel store={store} />}
     </div>
