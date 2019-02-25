@@ -6,7 +6,7 @@ import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
-import { _, it } from 'param.macro'
+import { _ } from 'param.macro'
 import { Rnd } from 'react-rnd'
 
 function createFakeRow() {
@@ -41,7 +41,7 @@ const Inspector = observer(() => {
           {R.compose(
             JSON.stringify(_, null, 2),
             toJS,
-            it.iObj,
+            // it.iObj,
           )(store)}
         </pre>
       </div>
