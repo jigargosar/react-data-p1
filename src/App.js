@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { autorun, observable, toJS } from 'mobx'
 import * as R from 'ramda'
@@ -16,6 +16,7 @@ function createFakeRow() {
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
   iObj: null,
+  iBounds: { x: 0, y: 0, width: '100vw', height: 150 },
 })
 
 initStore()
@@ -24,24 +25,15 @@ const pickXY = R.pick(['x', 'y'])
 const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
-  const [pos, setPos] = useState(() => ({
-    x: 0,
-    y: 0,
-    width: '100vw',
-    height: 200,
-  }))
   return (
     <Rnd
-      size={pos}
-      position={pos}
+      size={store.iBounds}
+      position={store.iBounds}
       onDragStop={(e, d) => {
-        setPos(pickXY(d))
+        Object.assign(store.iBounds, pickXY(d))
       }}
       onResize={(e, direction, ref, delta, position) => {
-        setPos({
-          ...pickSize(ref.style),
-          ...position,
-        })
+        Object.assign(store.iBounds, pickSize(ref.style), position)
       }}
     >
       <div className="pa3 flex flex-column h-100 bg-black-80 white">
