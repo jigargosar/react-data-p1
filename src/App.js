@@ -30,6 +30,12 @@ initStore()
 // const pickXY = R.pick(['x', 'y'])
 // const pickSize = R.pick(['width', 'height'])
 
+const Inspect = observer(({ data }) => {
+  return <div className="">{JSON.stringify(data, null, 2)}</div>
+})
+
+Inspect.displayName = 'Inspect'
+
 const InspectorPanel = observer(() => {
   return (
     <div
@@ -43,11 +49,12 @@ const InspectorPanel = observer(() => {
     >
       <div className="h-100 flex flex-row" style={{ fontSize: 10 }}>
         <pre className="overflow-scroll  w-50">
-          {R.compose(
-            JSON.stringify(_, null, 2),
-            toJS,
-            R.prop('inspected'),
-          )(store)}
+          <Inspect
+            data={R.compose(
+              toJS,
+              R.prop('inspected'),
+            )(store)}
+          />
         </pre>
         <pre className="overflow-scroll  w-50">
           {R.compose(
