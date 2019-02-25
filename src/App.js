@@ -30,6 +30,19 @@ initStore()
 // const pickSize = R.pick(['width', 'height'])
 
 const Inspect = observer(({ data }) => {
+  const Ins = R.is(Array) ? InspectArray : InspectObject
+  return (
+    <pre className="">
+      <Ins data={data} />
+    </pre>
+  )
+})
+
+const InspectObject = observer(({ data }) => {
+  return <pre className="">{JSON.stringify(data, null, 2)}</pre>
+})
+
+const InspectArray = observer(({ data }) => {
   return <pre className="">{JSON.stringify(data, null, 2)}</pre>
 })
 
