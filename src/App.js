@@ -38,6 +38,20 @@ const Inspect = observer(({ data }) => {
   )
 })
 
+function isPrimitive(value) {
+  return ['Boolean', 'String', 'Number'].includes(R.type(value))
+}
+
+const InspectValue = observer(({ value }) => {
+  if (isPrimitive(value)) {
+    return `${value}`
+  } else {
+    return R.type(value)
+  }
+})
+
+InspectValue.displayName = 'InspectValue'
+
 const InspectObject = observer(({ data }) => {
   const kvPairs = R.toPairs(data)
   return (
@@ -45,7 +59,7 @@ const InspectObject = observer(({ data }) => {
       {kvPairs.map(([key, value]) => {
         return (
           <div className="">
-            >{key}:{R.type(value)}
+            >{key}: <InspectValue value={value} />
           </div>
         )
       })}
