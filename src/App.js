@@ -18,6 +18,21 @@ const store = observable.object({
 
 initStore()
 
+const Inspector = observer(() => {
+  return (
+    <div className="pa3">
+      <pre>
+        {R.compose(
+          JSON.stringify,
+          toJS,
+        )(store)}
+      </pre>
+    </div>
+  )
+})
+
+Inspector.displayName = 'Inspector'
+
 const Row = observer(({ row }) => {
   return (
     <div className="ma3" onClick={() => (store.iObj = row)}>
@@ -37,6 +52,7 @@ function App() {
     <div className="">
       <h1>ReactDataP1</h1>
       {store.rows.map(renderRow)}
+      <Inspector />
     </div>
   )
 }
