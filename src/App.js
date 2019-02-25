@@ -32,56 +32,35 @@ const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
   return (
-    <div
-      className={clsx('absolute top-0 left-0', {
-        dn: store.inspector.selecting,
-      })}
+    <Rnd
+      className={clsx('f7')}
+      size={pickSize(store.inspectorBounds)}
+      position={{
+        x: store.inspectorBounds.x,
+        y: store.inspectorBounds.y,
+      }}
+      onDragStop={(e, d) => {
+        store.inspectorBounds.x = d.x
+        store.inspectorBounds.y = d.y
+      }}
+      onResize={(e, direction, ref, delta, position) => {
+        Object.assign(store.inspectorBounds, pickSize(ref.style), position)
+      }}
+      // dragHandleClassName={'drag-handle'}
     >
-      <Rnd
-        className={clsx('f7')}
-        size={pickSize(store.inspectorBounds)}
-        position={{
-          x: store.inspectorBounds.x,
-          y: store.inspectorBounds.y,
-        }}
-        onDragStop={(e, d) => {
-          store.inspectorBounds.x = d.x
-          store.inspectorBounds.y = d.y
-        }}
-        onResize={(e, direction, ref, delta, position) => {
-          Object.assign(
-            store.inspectorBounds,
-            pickSize(ref.style),
-            position,
-          )
-        }}
-        dragHandleClassName={'drag-handle'}
+      <div
+        className="overflow-scroll pa3 flex flex-column bg-black-80 white"
+        style={{ height: store.inspectorBounds.height }}
       >
-        <div
-          className="drag-handle bg-black white flex"
-          style={{ cursor: 'move' }}
-        >
-          <div
-            className="pa1 link pointer"
-            tabIndex={-1}
-            onClick={() => {
-              store.inspector.selecting = true
-            }}
-          >
-            O
-          </div>
-        </div>
-        <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
-          <pre>
-            {R.compose(
-              JSON.stringify(_, null, 2),
-              toJS,
-              // it.iObj,
-            )(store)}
-          </pre>
-        </div>
-      </Rnd>
-    </div>
+        <pre>
+          {R.compose(
+            JSON.stringify(_, null, 2),
+            toJS,
+            // it.iObj,
+          )(store)}
+        </pre>
+      </div>
+    </Rnd>
   )
 })
 
@@ -108,7 +87,7 @@ function renderRow(row) {
 function App() {
   return (
     <div
-      className=""
+      className="relative"
       style={{ minHeight: '100vh' }}
       onClick={e => {
         if (store.inspector.selecting) {
