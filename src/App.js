@@ -6,7 +6,7 @@ import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
-import { _ } from 'param.macro'
+import { _, it } from 'param.macro'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -26,6 +26,7 @@ const Inspector = observer(() => {
         {R.compose(
           JSON.stringify(_, null, 2),
           toJS,
+          it.iObj,
         )(store)}
       </pre>
     </div>
