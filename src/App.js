@@ -7,6 +7,7 @@ import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
 import { _, it } from 'param.macro'
+import { Rnd } from 'react-rnd'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -21,15 +22,24 @@ initStore()
 
 const Inspector = observer(() => {
   return (
-    <div className="pa3">
-      <pre>
-        {R.compose(
-          JSON.stringify(_, null, 2),
-          toJS,
-          it.iObj,
-        )(store)}
-      </pre>
-    </div>
+    <Rnd
+      default={{
+        x: 0,
+        y: 0,
+        width: '100vw',
+        height: 200,
+      }}
+    >
+      <div className="pa3 flex flex-column h-100 bg-black-80 white">
+        <pre>
+          {R.compose(
+            JSON.stringify(_, null, 2),
+            toJS,
+            it.iObj,
+          )(store)}
+        </pre>
+      </div>
+    </Rnd>
   )
 })
 
