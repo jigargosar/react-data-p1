@@ -34,9 +34,13 @@ const Inspector = observer(() => {
 
 Inspector.displayName = 'Inspector'
 
+function inspectObject(row) {
+  return (store.iObj = row)
+}
+
 const Row = observer(({ row }) => {
   return (
-    <div className="ma3" onClick={() => (store.iObj = row)}>
+    <div className="ma3" onClick={() => inspectObject(row)}>
       {row.name}
     </div>
   )
