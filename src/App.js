@@ -99,7 +99,7 @@ function renderRow(row) {
 
 function App() {
   return (
-    <div className="">
+    <div className="" style={{ minHeight: '100vh' }}>
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
       <Inspector />
