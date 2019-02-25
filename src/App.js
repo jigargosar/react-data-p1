@@ -88,7 +88,7 @@ const InspectObject = observer(({ data }) => {
                 fontSize: '0.6em',
                 lineHeight: '1em',
                 position: 'relative',
-                top: '2px',
+                top: '0.2em',
               }}
             >
               {isComplexType ? '► ' : ' '}
