@@ -20,6 +20,9 @@ const store = observable.object({
 
 initStore()
 
+const pickXY = R.pick(['x', 'y'])
+const pickSize = R.pick(['width', 'height'])
+
 const Inspector = observer(() => {
   const [pos, setPos] = useState(() => ({
     x: 0,
@@ -32,12 +35,11 @@ const Inspector = observer(() => {
       size={pos}
       position={pos}
       onDragStop={(e, d) => {
-        setPos(R.pick(['x', 'y'])(d))
+        setPos(pickXY(d))
       }}
       onResize={(e, direction, ref, delta, position) => {
         setPos({
-          width: ref.style.width,
-          height: ref.style.height,
+          ...pickSize(ref.style),
           ...position,
         })
       }}
