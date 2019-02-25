@@ -91,7 +91,7 @@ const InspectObject = observer(({ data }) => {
                 top: '0.2em',
               }}
             >
-              {isComplexType ? '► ' : ' '}
+              {isComplexType ? '► ' : '  '}
             </div>
             <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
             <div className="ml1">
