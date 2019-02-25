@@ -49,12 +49,16 @@ function App() {
     <div className="vh-100 overflow-container">
       <h1 className="ma0">ReactDataP1</h1>
       <TreeLike
-        getNodesAt={({ level }) => {
-          if (level === 0) {
+        getNodesAt={({ level, parentNode }) => {
+          if (!parentNode) {
             return store.rows
+          } else if (level === 1) {
+            return store.rows
+          } else {
+            return []
           }
         }}
-        getNodeKey={node => node.id}
+        getNodeKey={({ node, parentNode }) => node.id}
         renderNode={({ node: row, level }) => {
           return <Row row={row} />
         }}

@@ -6,17 +6,22 @@ export const TreeLike = observer(function TreeLike({
   getNodeKey,
   renderNode,
 }) {
+  function renderNodesAt({ level, parentNode }) {
+    return getNodesAt({ level, parentNode }).map(node => {
+      return (
+        <Fragment key={getNodeKey({ node, parentNode })}>
+          {renderNode({ node, level: level })}
+          {renderNodesAt({ level: level + 1, parentNode: node })}
+        </Fragment>
+      )
+    })
+  }
+
   return (
     <div className="bg-lightest-blue">
       <div className="f4 pa3">TreeLike:</div>
       <div className="">
-        {getNodesAt({ level: 0 }).map(node => {
-          return (
-            <Fragment key={getNodeKey(node)}>
-              {renderNode({ node, level: 0 })}
-            </Fragment>
-          )
-        })}
+        {renderNodesAt({ level: 0, parentNode: null })}
       </div>
     </div>
   )
