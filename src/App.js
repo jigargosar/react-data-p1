@@ -13,12 +13,17 @@ function createFakeRow() {
 
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
+  iObj: null,
 })
 
 initStore()
 
 const Row = observer(({ row }) => {
-  return <div className="ma3">{row.name}</div>
+  return (
+    <div className="ma3" onClick={() => (store.iObj = row)}>
+      {row.name}
+    </div>
+  )
 })
 
 Row.displayName = 'Row'
