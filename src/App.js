@@ -48,7 +48,7 @@ function App() {
     <div className="vh-100">
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
-      <InspectorPanel store={store} />
+      {false && <InspectorPanel store={store} />}
     </div>
   )
 }
