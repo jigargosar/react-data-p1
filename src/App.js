@@ -82,8 +82,10 @@ const InspectObject = observer(({ data }) => {
       {kvPairs.map(([key, value]) => {
         const isComplexType = R.is(Object)(value)
         return (
-          <div key={key} className="flex">
-            <div>{isComplexType ? '>' : ' '}</div>
+          <div key={key} className="flex items-center">
+            <div style={{ fontSize: 6, position: 'relative', top: '2px' }}>
+              {isComplexType ? '► ' : ' '}
+            </div>
             <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
             <div className="ml1">
               <InspectValue value={value} />
