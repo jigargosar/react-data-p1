@@ -26,12 +26,13 @@ function inspectObject(row) {
   return (store.inspected = row)
 }
 
-const Row = observer(({ row }) => {
+const Row = observer(({ row, level }) => {
   return (
     <div
       className="pv2 ph3"
       onClick={() => inspectObject(row)}
       tabIndex={0}
+      style={{ paddingLeft: level * 20 + 20 }}
     >
       {row.name}
     </div>
@@ -60,7 +61,7 @@ function App() {
         }}
         getNodeKey={({ node, parentNode }) => node.id}
         renderNode={({ node: row, level }) => {
-          return <Row row={row} />
+          return <Row row={row} level={level} />
         }}
       />
       {store.rows.map(renderRow)}
