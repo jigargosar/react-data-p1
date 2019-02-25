@@ -1,16 +1,21 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { Fragment } from 'react'
 
 export const TreeLike = observer(function TreeLike({
   getNodesAt,
+  getNodeKey,
   renderNode,
 }) {
   return (
-    <div className="">
+    <div className="bg-lightest-blue">
       <div className="f4 pa3">TreeLike:</div>
       <div className="">
         {getNodesAt({ level: 0 }).map(node => {
-          return <>{renderNode({ node, level: 0 })}</>
+          return (
+            <Fragment key={getNodeKey(node)}>
+              {renderNode({ node, level: 0 })}
+            </Fragment>
+          )
         })}
       </div>
     </div>

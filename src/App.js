@@ -46,7 +46,7 @@ function renderRow(row) {
 
 function App() {
   return (
-    <div className="vh-100">
+    <div className="vh-100 overflow-container">
       <h1 className="ma0">ReactDataP1</h1>
       <TreeLike
         getNodesAt={({ level }) => {
@@ -54,8 +54,9 @@ function App() {
             return store.rows
           }
         }}
+        getNodeKey={node => node.id}
         renderNode={({ node: row, level }) => {
-          return <Row key={row.id} row={row} />
+          return <Row row={row} />
         }}
       />
       {store.rows.map(renderRow)}
