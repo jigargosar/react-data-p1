@@ -30,7 +30,7 @@ initStore()
 // const pickXY = R.pick(['x', 'y'])
 // const pickSize = R.pick(['width', 'height'])
 
-const Inspector = observer(() => {
+const InspectorPanel = observer(() => {
   return (
     <div
       className="bg-black-80 white"
@@ -60,7 +60,7 @@ const Inspector = observer(() => {
   )
 })
 
-Inspector.displayName = 'Inspector'
+InspectorPanel.displayName = 'InspectorPanel'
 
 function inspectObject(row) {
   return (store.inspected = row)
@@ -85,7 +85,7 @@ function App() {
     <div className="vh-100">
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
-      <Inspector />
+      <InspectorPanel />
     </div>
   )
 }
