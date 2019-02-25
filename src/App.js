@@ -15,21 +15,7 @@ const store = observable.object({
   rows: R.times(createFakeRow)(10),
 })
 
-function getCachedStore() {
-  return R.compose(
-    R.pick(['rows']),
-    R.defaultTo({}),
-    getCached,
-  )('store')
-}
-
-Object.assign(store, getCachedStore())
-
-hotDispose(
-  autorun(() => {
-    setCache('store', toJS(store))
-  }),
-)
+initStore()
 
 const Row = observer(({ row }) => {
   return <div className="ma3">{row.name}</div>
@@ -57,4 +43,22 @@ function hotDispose(disposer) {
   if (module.hot) {
     module.hot.dispose(R.tryCatch(disposer, console.error))
   }
+}
+
+function initStore() {
+  function getCachedStore() {
+    return R.compose(
+      R.pick(['rows']),
+      R.defaultTo({}),
+      getCached,
+    )('store')
+  }
+
+  Object.assign(store, getCachedStore())
+
+  hotDispose(
+    autorun(() => {
+      setCache('store', toJS(store))
+    }),
+  )
 }
