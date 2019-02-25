@@ -86,6 +86,7 @@ const InspectObject = observer(({ data }) => {
             <div
               style={{
                 fontSize: '0.6em',
+                lineHeight: '1em',
                 position: 'relative',
                 top: '2px',
               }}
@@ -121,7 +122,7 @@ const InspectorPanel = observer(() => {
         width: '100vw',
       }}
     >
-      <div className="h-100 flex flex-row" style={{ fontSize: 10 }}>
+      <div className="h-100 flex flex-row" style={{ fontSize: 12 }}>
         <div className="overflow-scroll  w-50">
           <Inspect data={store.inspected} />
         </div>
