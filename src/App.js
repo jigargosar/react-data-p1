@@ -16,7 +16,7 @@ function createFakeRow() {
 }
 
 const store = observable.object({
-  rows: R.times(createFakeRow)(10),
+  rows: R.times(createFakeRow)(3),
   rowsById: R.compose(
     R.reduce((acc, row) => R.assoc(row.id)(row)(acc))({}),
     R.times(createFakeRow),
