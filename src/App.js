@@ -42,12 +42,33 @@ function isPrimitive(value) {
   return ['Boolean', 'String', 'Number'].includes(R.type(value))
 }
 
+const StringValue = observer(({ value }) => {
+  return <div className="">{`"${value}"`}</div>
+})
+
+StringValue.displayName = 'StringValue'
+
+const PrimitiveValue = observer(({ value }) => {
+  return <div className="">{`${value}`}</div>
+})
+
+PrimitiveValue.displayName = 'PrimitiveValue'
+
+const UnknownValue = observer(({ value }) => {
+  return R.type(value)
+})
+
+UnknownValue.displayName = 'UnknownValue'
+
 const InspectValue = observer(({ value }) => {
-  if (isPrimitive(value)) {
-    return `${value}`
-  } else {
-    return R.type(value)
+  const compLookup = {
+    String: StringValue,
+    Boolean: PrimitiveValue,
+    Number: PrimitiveValue,
   }
+  const valueType = R.type(value)
+  const Comp = R.propOr(UnknownValue, valueType)(compLookup)
+  return <Comp value={value} />
 })
 
 InspectValue.displayName = 'InspectValue'
@@ -57,9 +78,14 @@ const InspectObject = observer(({ data }) => {
   return (
     <pre className="">
       {kvPairs.map(([key, value]) => {
+        const primitive = isPrimitive(value)
         return (
-          <div className="">
-            >{key}: <InspectValue value={value} />
+          <div key={key} className="flex">
+            <div>{primitive ? ' ' : '>'}</div>
+            <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
+            <div className="ml1">
+              <InspectValue value={value} />
+            </div>
           </div>
         )
       })}
