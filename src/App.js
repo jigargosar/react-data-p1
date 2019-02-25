@@ -36,7 +36,7 @@ const Inspector = observer(() => {
         Object.assign(store.iBounds, pickSize(ref.style), position)
       }}
     >
-      <div className="pa3 flex flex-column h-100 bg-black-80 white">
+      <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
         <pre>
           {R.compose(
             JSON.stringify(_, null, 2),
