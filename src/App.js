@@ -17,6 +17,10 @@ function createFakeRow() {
 
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
+  rowsById: R.compose(
+    R.reduce((acc, row) => R.assoc(row.id)(row)(acc))({}),
+    R.times(createFakeRow),
+  )(10),
   inspected: null,
 })
 
@@ -26,7 +30,7 @@ function inspectObject(row) {
   return (store.inspected = row)
 }
 
-const Row = observer(({ row, level }) => {
+const Row = observer(({ row, level = 0 }) => {
   return (
     <div
       className="pv2 ph3"
