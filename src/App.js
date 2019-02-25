@@ -30,7 +30,7 @@ initStore()
 // const pickSize = R.pick(['width', 'height'])
 
 const Inspect = observer(({ data }) => {
-  const Ins = R.is(Array) ? InspectArray : InspectObject
+  const Ins = R.is(Array)(data) ? InspectArray : InspectObject
   return (
     <pre className="">
       <Ins data={data} />
@@ -39,10 +39,22 @@ const Inspect = observer(({ data }) => {
 })
 
 const InspectObject = observer(({ data }) => {
-  return <pre className="">{JSON.stringify(data, null, 2)}</pre>
+  const kvPairs = R.toPairs(data)
+  return (
+    <pre className="">
+      {kvPairs.map(([key, value]) => {
+        return (
+          <div className="">
+            >{key}:{R.type(value)}
+          </div>
+        )
+      })}
+    </pre>
+  )
 })
 
 const InspectArray = observer(({ data }) => {
+  debugger
   return <pre className="">{JSON.stringify(data, null, 2)}</pre>
 })
 
