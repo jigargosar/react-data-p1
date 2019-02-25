@@ -12,7 +12,8 @@
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5",
-    "tachyons": "^4.11.1"
+    "tachyons": "^4.11.1",
+    "aproba": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

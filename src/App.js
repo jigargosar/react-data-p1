@@ -4,6 +4,7 @@ import { observable } from 'mobx'
 import * as R from 'ramda'
 import faker from 'faker'
 import * as nanoid from 'nanoid'
+import validate from 'aproba'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -11,6 +12,17 @@ function createFakeRow() {
 
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
+})
+
+function hotDispose(disposer) {
+  validate('F', arguments)
+  if (module.hot) {
+    module.hot.dispose(R.tryCatch(disposer, console.error))
+  }
+}
+
+hotDispose(() => {
+  console.log('Disposing')
 })
 
 const Row = observer(({ row }) => {
