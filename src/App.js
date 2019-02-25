@@ -43,7 +43,13 @@ function isPrimitive(value) {
 }
 
 const StringValue = observer(({ value }) => {
-  return <div className="">{`"${value}"`}</div>
+  return (
+    <div className="flex">
+      <div className="white">"</div>
+      <div className="red">{`${value}`}</div>
+      <div className="white">"</div>
+    </div>
+  )
 })
 
 StringValue.displayName = 'StringValue'
