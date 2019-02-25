@@ -16,26 +16,13 @@ function createFakeRow() {
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
   inspected: null,
-  inspectorBounds: { x: 0, y: 0, width: '100vw', height: 150 },
-  inspector: {
-    selecting: false,
-  },
 })
 
 initStore()
-// store.inspectorBounds.x = 0
-// store.inspectorBounds.y = 0
-
-// const pickXY = R.pick(['x', 'y'])
-// const pickSize = R.pick(['width', 'height'])
 
 const Inspect = observer(({ data }) => {
-  const Ins = R.is(Array)(data) ? InspectArray : InspectObject
-  return (
-    <pre className="">
-      <Ins data={data} />
-    </pre>
-  )
+  const kvPairs = R.toPairs(data)
+  return <div className="">{kvPairs.map(renderKeyValuePair)}</div>
 })
 
 const StringValue = observer(({ value }) => {
@@ -75,41 +62,30 @@ const InspectValue = observer(({ value }) => {
 
 InspectValue.displayName = 'InspectValue'
 
-const InspectObject = observer(({ data }) => {
-  const kvPairs = R.toPairs(data)
+function renderKeyValuePair([key, value]) {
+  const isComplexType = R.is(Object)(value)
   return (
-    <pre className="">
-      {kvPairs.map(([key, value]) => {
-        const isComplexType = R.is(Object)(value)
-        return (
-          <div key={key} className="flex items-center">
-            <div
-              style={{
-                fontSize: '0.6em',
-                lineHeight: 1,
-                position: 'relative',
-                top: '0.2em',
-              }}
-            >
-              {isComplexType ? '► ' : '  '}
-            </div>
-            <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
-            <div className="ml1">
-              <InspectValue value={value} />
-            </div>
-          </div>
-        )
-      })}
-    </pre>
+    <>
+      <div key={key} className="flex items-center">
+        <div
+          style={{
+            fontSize: '0.6em',
+            lineHeight: 1,
+            position: 'relative',
+            top: '0.2em',
+          }}
+        >
+          {isComplexType ? '► ' : '  '}
+        </div>
+        <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
+        <div className="ml1">
+          <InspectValue value={value} />
+        </div>
+      </div>
+      {isComplexType && <Inspect data={value} />}
+    </>
   )
-})
-
-const InspectArray = observer(({ data }) => {
-  debugger
-  return <pre className="">{JSON.stringify(data, null, 2)}</pre>
-})
-
-Inspect.displayName = 'Inspect'
+}
 
 const InspectorPanel = observer(() => {
   return (
