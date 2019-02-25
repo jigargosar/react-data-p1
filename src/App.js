@@ -36,6 +36,7 @@ const Inspector = observer(() => {
         Object.assign(store.inspectorBounds, pickSize(ref.style), position)
       }}
     >
+      <div className="bg-black white">Toolbar</div>
       <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
         <pre>
           {R.compose(
