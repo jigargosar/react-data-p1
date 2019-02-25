@@ -99,7 +99,15 @@ function renderRow(row) {
 
 function App() {
   return (
-    <div className="" style={{ minHeight: '100vh' }}>
+    <div
+      className=""
+      style={{ minHeight: '100vh' }}
+      onClick={e => {
+        if (store.inspector.selecting) {
+          store.inspector.selecting = false
+        }
+      }}
+    >
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
       <Inspector />
