@@ -42,7 +42,7 @@ const Inspector = observer(() => {
         className="drag-handle bg-black white flex"
         style={{ cursor: 'move' }}
       >
-        <div className="pa1 link" tabIndex={-1}>
+        <div className="pa1 link pointer" tabIndex={-1}>
           O
         </div>
       </div>
