@@ -49,12 +49,12 @@ function App() {
     <div className="vh-100">
       <h1 className="ma0">ReactDataP1</h1>
       <TreeLike
-        getNodesAt={level => {
+        getNodesAt={({ level }) => {
           if (level === 0) {
             return store.rows
           }
         }}
-        renderNode={row => {
+        renderNode={({ node: row, level }) => {
           return <Row key={row.id} row={row} />
         }}
       />
