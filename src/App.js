@@ -5,7 +5,7 @@ import * as R from 'ramda'
 import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
-import { setCache } from './cache-helpers'
+import { getCached, setCache } from './cache-helpers'
 
 function createFakeRow() {
   return { id: nanoid(), name: faker.name.findName() }
@@ -14,6 +14,16 @@ function createFakeRow() {
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
 })
+
+function getCachedStore() {
+  return R.compose(
+    R.pick(['rows']),
+    R.defaultTo({}),
+    getCached,
+  )('store')
+}
+
+Object.assign(store, getCachedStore())
 
 hotDispose(
   autorun(() => {
