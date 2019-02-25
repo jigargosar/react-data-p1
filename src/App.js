@@ -6,7 +6,6 @@ import faker from 'faker'
 import * as nanoid from 'nanoid'
 import validate from 'aproba'
 import { getCached, setCache } from './cache-helpers'
-import { _ } from 'param.macro'
 
 // import clsx from 'clsx'
 
@@ -49,18 +48,10 @@ const InspectorPanel = observer(() => {
     >
       <div className="h-100 flex flex-row" style={{ fontSize: 10 }}>
         <pre className="overflow-scroll  w-50">
-          <Inspect
-            data={R.compose(
-              toJS,
-              R.prop('inspected'),
-            )(store)}
-          />
+          <Inspect data={store.inspected} />
         </pre>
         <pre className="overflow-scroll  w-50">
-          {R.compose(
-            JSON.stringify(_, null, 2),
-            toJS,
-          )(store)}
+          <Inspect data={store} />
         </pre>
       </div>
     </div>
