@@ -91,7 +91,7 @@ function hotDispose(disposer) {
 function initStore() {
   function getCachedStore() {
     return R.compose(
-      R.pick(['rows']),
+      R.omit(['']),
       R.defaultTo({}),
       getCached,
     )('store')
