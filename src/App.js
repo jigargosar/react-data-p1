@@ -15,8 +15,8 @@ function createFakeRow() {
 
 const store = observable.object({
   rows: R.times(createFakeRow)(10),
-  iObj: null,
-  iBounds: { x: 0, y: 0, width: '100vw', height: 150 },
+  inspected: null,
+  inspectorBounds: { x: 0, y: 0, width: '100vw', height: 150 },
 })
 
 initStore()
@@ -27,13 +27,13 @@ const pickSize = R.pick(['width', 'height'])
 const Inspector = observer(() => {
   return (
     <Rnd
-      size={store.iBounds}
-      position={store.iBounds}
+      size={store.inspectorBounds}
+      position={store.inspectorBounds}
       onDragStop={(e, d) => {
-        Object.assign(store.iBounds, pickXY(d))
+        Object.assign(store.inspectorBounds, pickXY(d))
       }}
       onResize={(e, direction, ref, delta, position) => {
-        Object.assign(store.iBounds, pickSize(ref.style), position)
+        Object.assign(store.inspectorBounds, pickSize(ref.style), position)
       }}
     >
       <div className="overflow-scroll pa3 flex flex-column h-100 bg-black-80 white">
@@ -52,7 +52,7 @@ const Inspector = observer(() => {
 Inspector.displayName = 'Inspector'
 
 function inspectObject(row) {
-  return (store.iObj = row)
+  return (store.inspected = row)
 }
 
 const Row = observer(({ row }) => {
