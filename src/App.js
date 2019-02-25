@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { autorun, observable, toJS } from 'mobx'
 import * as R from 'ramda'
@@ -21,13 +21,25 @@ const store = observable.object({
 initStore()
 
 const Inspector = observer(() => {
+  const [pos, setPos] = useState(() => ({
+    x: 0,
+    y: 0,
+    width: '100vw',
+    height: 200,
+  }))
   return (
     <Rnd
-      default={{
-        x: 0,
-        y: 0,
-        width: '100vw',
-        height: 200,
+      size={pos}
+      position={pos}
+      onDragStop={(e, d) => {
+        setPos(R.pick(['x', 'y'])(d))
+      }}
+      onResize={(e, direction, ref, delta, position) => {
+        setPos({
+          width: ref.style.width,
+          height: ref.style.height,
+          ...position,
+        })
       }}
     >
       <div className="pa3 flex flex-column h-100 bg-black-80 white">
@@ -66,7 +78,7 @@ function renderRow(row) {
 function App() {
   return (
     <div className="">
-      <h1>ReactDataP1</h1>
+      <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
       <Inspector />
     </div>
