@@ -142,7 +142,11 @@ function inspectObject(row) {
 
 const Row = observer(({ row }) => {
   return (
-    <div className="ma3" onClick={() => inspectObject(row)}>
+    <div
+      className="pv2 ph3"
+      onClick={() => inspectObject(row)}
+      tabIndex={0}
+    >
       {row.name}
     </div>
   )
