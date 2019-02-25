@@ -86,7 +86,7 @@ const InspectObject = observer(({ data }) => {
             <div
               style={{
                 fontSize: '0.6em',
-                lineHeight: '0.6em',
+                lineHeight: 1,
                 position: 'relative',
                 top: '0.2em',
               }}
