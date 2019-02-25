@@ -32,8 +32,19 @@ initStore()
 
 const Inspector = observer(() => {
   return (
-    <div className="overflow-scroll" style={{ height: 100 }}>
-      <div className=" pa3 flex flex-column bg-black-80 white">
+    <div
+      className="overflow-scroll"
+      style={{
+        height: '25vh',
+        position: 'fixed',
+        bottom: 0,
+        width: '100vw',
+      }}
+    >
+      <div
+        className="pa1 flex flex-column bg-black-80 white"
+        style={{ fontSize: 10 }}
+      >
         <pre>
           {R.compose(
             JSON.stringify(_, null, 2),
