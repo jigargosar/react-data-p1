@@ -87,8 +87,7 @@ function renderRow(row) {
 function App() {
   return (
     <div
-      className="relative"
-      style={{ minHeight: '100vh' }}
+      className="relative min-vh-100"
       onClick={e => {
         if (store.inspector.selecting) {
           store.inspector.selecting = false
@@ -97,7 +96,7 @@ function App() {
     >
       <h1 className="ma0">ReactDataP1</h1>
       {store.rows.map(renderRow)}
-      <Inspector />
+      {/*<Inspector />*/}
     </div>
   )
 }
