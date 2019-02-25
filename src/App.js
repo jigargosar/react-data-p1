@@ -24,19 +24,23 @@ const store = observable.object({
 })
 
 initStore()
-store.inspectorBounds.x = 0
-store.inspectorBounds.y = 0
+// store.inspectorBounds.x = 0
+// store.inspectorBounds.y = 0
 
 const pickXY = R.pick(['x', 'y'])
 const pickSize = R.pick(['width', 'height'])
 
 const Inspector = observer(() => {
   return (
-    <div className={clsx({ dn: store.inspector.selecting })}>
+    <div
+      className={clsx('absolute top-0 left-0', {
+        dn: store.inspector.selecting,
+      })}
+    >
       <Rnd
         className={clsx('f7')}
-        size={store.inspectorBounds}
-        position={store.inspectorBounds}
+        size={pickSize(store.inspectorBounds)}
+        position={pickXY(store.inspectorBounds)}
         onDragStop={(e, d) => {
           Object.assign(store.inspectorBounds, pickXY(d))
         }}
