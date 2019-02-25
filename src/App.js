@@ -38,10 +38,6 @@ const Inspect = observer(({ data }) => {
   )
 })
 
-function isPrimitive(value) {
-  return ['Boolean', 'String', 'Number'].includes(R.type(value))
-}
-
 const StringValue = observer(({ value }) => {
   return (
     <div className="flex">
@@ -84,10 +80,10 @@ const InspectObject = observer(({ data }) => {
   return (
     <pre className="">
       {kvPairs.map(([key, value]) => {
-        const primitive = isPrimitive(value)
+        const isComplexType = R.is(Object)(value)
         return (
           <div key={key} className="flex">
-            <div>{primitive ? ' ' : '>'}</div>
+            <div>{isComplexType ? '>' : ' '}</div>
             <div style={{ color: '#E173E9' }}>{`${key}`}</div>:
             <div className="ml1">
               <InspectValue value={value} />
